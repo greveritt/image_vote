@@ -1,0 +1,7 @@
+CREATE TABLE images
+	(id INT(30) UNSIGNED AUTO_INCREMENT,
+	name VARCHAR(30),
+	ups INT(3),
+	downs INT(3),
+	url VARCHAR(40) NOT NULL,
+	PRIMARY KEY(id));
