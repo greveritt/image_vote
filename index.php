@@ -19,10 +19,35 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+		<?php
+			require 'dbFunctions.php';
+			$db = getDBAccess();
 
-		<img id="voteonme" src="<?php echo 'words' ?>"></img>
+			// get number of images
+			$idQuery = 'SELECT id FROM images ORDER BY RAND() LIMIT 1';
+			$idStmt = $db->prepare($idQuery);
+			$idStmt->bind_result($imgId);
+			$idStmt->execute();
+			$idStmt->fetch();
+			$idStmt->close();
+
+			$urlQuery= 'SELECT url FROM images WHERE id = ?';
+			$urlStmt = $db->prepare($urlQuery);
+			$urlStmt->bind_param('i', $imgId);
+			$urlStmt->bind_result($imgUrl);
+			$urlStmt->execute();
+			$urlStmt->fetch();
+			$urlStmt->close();
+			echo '<img id="voteonme" src="'.$imgUrl.'" alt="Vote on this image">';
+		?>
+		<img id="upButton" src="up-button.png" onclick="$('#up').prop('checked', true);$('#rating').submit()" alt="vote up">
+		<img id="downButton" src="down-button.png" onclick="$('#down').prop('checked', true);$('#rating').submit()" alt="vote down">
+
+		<form id="rating" action="vote.php" method="post">
+			<input type="radio" name="upordown" value="up" id="up">
+			<input type="radio" name="upordown" value="down" id="down">
+			<input type="submit" value="Send" id="submit">
+		</form>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>

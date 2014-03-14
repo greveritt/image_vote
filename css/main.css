@@ -97,11 +97,15 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+img#voteonme {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+}
 
-
-
-
-
+form#rating {
+		/*visibility: hidden;*/
+}
 
 
 
