@@ -18,7 +18,6 @@ function checkConnection($db) {
 function getDBAccess() {
 	$db = connect();
 	checkConnection($db);
-	ensureTableInit($db);
 	return $db;
 }
 
