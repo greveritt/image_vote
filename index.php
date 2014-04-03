@@ -26,19 +26,18 @@
 			// get number of images
 			$idQuery = 'SELECT id FROM images ORDER BY RAND() LIMIT 1';
 			$idStmt = $db->prepare($idQuery);
-			$idStmt->bind_result($imgId);
 			$idStmt->execute();
-			$idStmt->fetch();
-			$idStmt->close();
+			$imgId = $idStmt->fetch();
+			$idStmt->closeCursor();
 
-			$urlQuery= 'SELECT url FROM images WHERE id = ?';
+			$urlQuery= 'SELECT url FROM images WHERE id = :imgId';
 			$urlStmt = $db->prepare($urlQuery);
-			$urlStmt->bind_param('i', $imgId);
-			$urlStmt->bind_result($imgUrl);
+			error_log(print_r($imgId['id'], 1));
+			$urlStmt->bindParam(':imgId', $imgId['id']);
 			$urlStmt->execute();
-			$urlStmt->fetch();
-			$urlStmt->close();
-			echo '<img id="voteonme" src="'.$imgUrl.'" alt="Vote on this image">';
+			$imgUrl = $urlStmt->fetch();
+			$urlStmt->closeCursor();
+			echo '<img id="voteonme" src="'.$imgUrl['url'].'" alt="Vote on this image">';
 		?>
 		<img id="upButton" src="up-button.png" onclick="upVote()" alt="vote up">
 		<img id="downButton" src="down-button.png" onclick="downVote()" alt="vote down">
