@@ -40,13 +40,13 @@
 			$urlStmt->close();
 			echo '<img id="voteonme" src="'.$imgUrl.'" alt="Vote on this image">';
 		?>
-		<img id="upButton" src="up-button.png" onclick="$('#up').prop('checked', true);$('#rating').submit()" alt="vote up">
-		<img id="downButton" src="down-button.png" onclick="$('#down').prop('checked', true);$('#rating').submit()" alt="vote down">
+		<img id="upButton" src="up-button.png" onclick="upVote()" alt="vote up">
+		<img id="downButton" src="down-button.png" onclick="downVote()" alt="vote down">
 
 		<form id="rating" action="vote.php" method="post">
 			<input type="radio" name="upordown" value="up" id="up">
 			<input type="radio" name="upordown" value="down" id="down">
-			<input type="submit" value="Send" id="submit">
+			<input type="submit" value="Send">
 		</form>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
