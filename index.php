@@ -32,21 +32,21 @@
 
 			$urlQuery= 'SELECT url FROM images WHERE id = :imgId';
 			$urlStmt = $db->prepare($urlQuery);
-			error_log(print_r($imgId['id'], 1));
 			$urlStmt->bindParam(':imgId', $imgId['id']);
 			$urlStmt->execute();
 			$imgUrl = $urlStmt->fetch();
 			$urlStmt->closeCursor();
-			echo '<img id="voteonme" src="'.$imgUrl['url'].'" alt="Vote on this image">';
-		?>
+			echo '<img id="voteonme" src="'.$imgUrl['url'].'" alt="Vote on this image">
 		<img id="upButton" src="up-button.png" onclick="upVote()" alt="vote up">
 		<img id="downButton" src="down-button.png" onclick="downVote()" alt="vote down">
 
 		<form id="rating" action="vote.php" method="post">
+			<input type="hidden" name="imgId" value="'.$imgId['id'].'">
 			<input type="radio" name="upordown" value="up" id="up">
 			<input type="radio" name="upordown" value="down" id="down">
 			<input type="submit" value="Send">
-		</form>
+		</form>';
+		?>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
